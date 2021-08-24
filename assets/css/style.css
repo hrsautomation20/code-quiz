@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primarycolor: white;
+    --secondarycolor: #8207a1;
+    --tertiarycolor: rgba(211, 56, 144.1);
+}
+
+body {
+    background: linear-gradient(to right, #00b09b, #96c93d);
+    ;
+    color: var(--secondary);
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* HEADER STYLING */
+
+header{
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 85%;
+    padding-top: 20px;
+}
+#view-high-scores:hover{
+    cursor: pointer;
+    color: var(--tertiarycolor);
+}
+header h4{
+    padding-left: 20px;
+    font-size: 1.3rem;
+    display: inline;
+}
+
+.timer{
+    font-size: 1.3rem;
+    color: var(--primarycolor);
+    display: inline;
+    text-align: right;
+    padding-left: 20px;
+}
+
+/* Container Styling  */
+
+.container{
+    padding: 20px;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+}
+
+h1{
+    color: var(--primarycolor);
+    font-size: 2.0rem;
+    font-weight: bold;
+}
+
+p{
+    color: var(--primarycolor);
+    font-size: 1.2rem;
+}
+
+.start{
+    align-items: center;
+    text-align: center;
+}
+
+.start h1, .start p{
+    text-align: center;
+}
+
+.questions{
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px 20px;
+    margin: auto;
+}
+
+.end input{
+    outline: thick;
+    border-width: 1px;
+    padding: 5px;
+    width: 35%;
+    font-size: 2.2rem;
+    border-radius: 5px;
+}
+.show{
+    display: flex;
+}
+.hide{
+    display: none;
+}
+
