@@ -1,99 +1,191 @@
+/* font-family: 'Roboto', sans-serif;
+font-family: 'Indie Flower', cursive; */
+
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --primarycolor: white;
-    --secondarycolor: #8207a1;
-    --tertiarycolor: rgba(211, 56, 144.1);
-}
-
 body {
-    background: linear-gradient(to right, #00b09b, #96c93d);
-    ;
-    color: var(--secondary);
-    margin: 0;
-    padding: 0;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
 }
 
-/* HEADER STYLING */
-
-header{
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    width: 85%;
-    padding-top: 20px;
-}
-#view-high-scores:hover{
-    cursor: pointer;
-    color: var(--tertiarycolor);
-}
-header h4{
-    padding-left: 20px;
-    font-size: 1.3rem;
-    display: inline;
-}
-
-.timer{
-    font-size: 1.3rem;
-    color: var(--primarycolor);
-    display: inline;
-    text-align: right;
-    padding-left: 20px;
-}
-
-/* Container Styling  */
-
-.container{
-    padding: 20px;
-    flex-direction: column;
-    width: 80%;
-    margin: auto;
-}
-
-h1{
-    color: var(--primarycolor);
-    font-size: 2.0rem;
+h1 {
+    font-size: 3.2rem;
+    padding-bottom: 20px;
+    color: white;
     font-weight: bold;
+    font-family: "Indie Flower", sans-serif;
 }
 
-p{
-    color: var(--primarycolor);
-    font-size: 1.2rem;
+h2 {
+    color: white;
 }
 
-.start{
-    align-items: center;
+p {
+    font-size: 30px;
+    padding-bottom: 20px;
+    color: wheat;
+    font-family: "Indie Flower";
+}
+
+#question-title {
+    color: white;
+    font-size: 30px;
+}
+
+#end-screen p {
+    font-family: 'Roboto', sans-serif;
+}
+
+.wrapper {
+    margin: 100px auto 0 auto;
+    max-width: 1000px;
     text-align: center;
 }
 
-.start h1, .start p{
-    text-align: center;
-}
-
-.questions{
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 40px 20px;
-    margin: auto;
-}
-
-.end input{
-    outline: thick;
-    border-width: 1px;
-    padding: 5px;
-    width: 35%;
-    font-size: 2.2rem;
-    border-radius: 5px;
-}
-.show{
-    display: flex;
-}
-.hide{
+.hide {
     display: none;
 }
 
+.start {
+    text-align: center;
+}
+
+.feedback {
+    font-style: italic;
+    font-size: 120%;
+    margin-top: 20px;
+    padding-top: 10px;
+    color: gray;
+    border-top: 2px solid rgb(201, 193, 193);
+}
+
+.timer {
+    position: absolute;
+    top: 1px;
+    right: 15px;
+    font-size: 30px;
+    color: white;
+    font-family: "Indie Flower", sans-serif;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.1s;
+    font-size: 30px;
+    font-family: "Indie Flower", sans-serif;
+    padding: 12px;
+}
+
+a:hover {
+    color: white;
+}
+
+button {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: teal;
+    border-radius: 5px;
+    padding: 10px 10px;
+    color: white;
+    border: 0;
+    transition: background-color 0.1s;
+}
+
+button:hover {
+    background-color: green;
+}
+
+.choices button {
+    display: block;
+}
+
+input[type="text"] {
+    font-size: 100%;
+}
+
+ol {
+    padding-left: 0px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+li {
+    padding: 5px;
+    list-style: decimal inside none;
+    color: white;
+}
+
+li:nth-child(odd) {
+    background-color: #dfdae7;
+    color: black;
+}
+
+/* Wave Effects */
+section .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(../images/wave.png);
+    background-size: 1000px 100px;
+}
+
+section .wave.wave1 {
+    animation: animate 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+}
+
+@keyframes animate {
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: 1000px;
+    }
+}
+
+section .wave.wave2 {
+    animation: animate2 15s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
+}
+
+@keyframes animate2 {
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: -1000px;
+    }
+}
+
+section .wave.wave3 {
+    animation: animate3 15s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15;
+}
+
+section .wave.wave4 {
+    animation: animate3 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -2s;
+    bottom: 15;
+}
