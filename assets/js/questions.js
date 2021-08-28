@@ -29,7 +29,7 @@ var questions = [
   },
   {
     title: "How to write an IF statement in JavaScript?",
-    choices: ["if i==5then", "if(i==5)", "if i=5 then", "if i=5"],
+    choices: ["if i==5then", "if (i==5)", "if i=5 then", "if i=5"],
     answer: "if (i==5)",
   },
   {
