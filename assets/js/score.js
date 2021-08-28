@@ -8,11 +8,9 @@ function printHighscores() {
   });
 
   highscores.forEach(function (score) {
-    // Create li tag for each Score
+    // Create li tag for each Score and displaying score on page/li
     var liTag = document.createElement("li");
     liTag.textContent = score.initials + " you scored - " + score.score;
-
-    // Displaying score on page/li
     var olEl = document.getElementById("highscores");
     olEl.appendChild(liTag);
   });
@@ -25,5 +23,4 @@ function clearHighscores() {
 
 document.getElementById("clear").onclick = clearHighscores;
 
-//To run print function when page loads
 printHighscores();
