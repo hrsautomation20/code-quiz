@@ -1,154 +1,127 @@
-var containerQuestionEl = document.getElementById("question-container");
-var containerStartEl = document.getElementById("starter-container");
-var containerEndEl = document.getElementById("end-container");
-var containerScoreEl = document.getElementById("score-banner");
-var formInitials = document.getElementById("initials-form");
-var containerHighScoreEl = document.getElementById("high-score-container");
-var viewHighScoreEl = document.getElementById("view-high-scores");
-var listHighScoreEl = document.getElementById("high-score-list");
-var correctEl = document.getElementById("correct");
-var wrongEl = document.getElementById("wrong");
+//DOM Elements
 
-var btnStartEl = document.querySelector("#start-game");
-var btnGoBackEl = document.querySelector("#go-back");
-var btnClearScoresEl = document.querySelector("#clear-high-scores");
+var questionsEl = document.getElementById("questions");
+var timerEl = document.getElementById("time");
+var choicesEl = document.getElementById("choices");
+var submitBtn = document.getElementById("submit");
+var startBtn = document.getElementById("start");
+var initialsEl = document.getElementById("initials");
+var feedbackEl = document.getElementById("feedback");
 
-var questionEl = document.getElementById("question");
-var answerbuttonsEl = document.getElementById("answer-buttons");
-var timerEl = document.querySelector("#timer");
+// Quiz state variables
+var currentQuestionIndex = 0;
+var time = questions.length * 20;
+var timerId;
 
-var score = 0;
-var timeleft;
-timerEl.innertext = 0;
+function startQuiz() {
+  // Hide the Start Screen when Start button clicked
+  var startScreenEl = document.getElementById("start-screen");
+  startScreenEl.setAttribute("class", "hide");
+  //Un-hide the question section
+  questionsEl.removeAttribute("class");
+  //Timer Starts and show starting time
+  timerId = setInterval(clockTick, 1000);
+  timerEl.textContent = time;
+  getQuestion();
+}
 
-var HighScores = [];
+function getQuestion() {
+  //Getting current question object from array
+  var currentQuestion = questions[currentQuestionIndex];
+  //Updating Question by replacing title and clear old questions
+  var titleEl = document.getElementById("question-title");
+  titleEl.textContent = currentQuestion.title;
+  choicesEl.innerHTML = "";
+  //Loop over choices and create new button for each choice
+  currentQuestion.choices.forEach(function (choice, i) {
+    var choiceNode = document.createElement("button");
+    choiceNode.setAttribute("class", "choice");
+    choiceNode.setAttribute("value", choice);
+    choiceNode.textContent = i + 1 + ". " + choice;
+    //Creating click event listener to each choice and display on page
+    choiceNode.onclick = questionClick;
+    choicesEl.appendChild(choiceNode);
+  });
+}
 
-var arrayShuffledQuestions;
-var QuestionIndex = 0;
+function questionClick() {
+  //Checking if user guessed wrong answer and penalize time by 15 sec.
+  if (this.value !== questions[currentQuestionIndex].answer) {
+    time -= 15;
+    if (time < 0) {
+      time = 0;
+    }
+    //Display new time on page based on wrong answer
+    timerEl.textContent = time;
+    feedbackEl.textContent = "Wrong";
+    feedbackEl.style.color = "red";
+    feedbackEl.style.fontSize = "200%";
+  } else {
+    feedbackEl.textContent = "Correct";
+    feedbackEl.style.color = "green";
+    feedbackEl.style.fontSize = "200%";
+  }
+  //Feedback when user selects an answer
+  feedbackEl.setAttribute("class", "feedback");
+  setTimeout(function () {
+    feedbackEl.setAttribute("class", "feedback hide");
+  }, 1000);
+  // Next Question and time checker
+  currentQuestionIndex++;
+  if (currentQuestionIndex === questions.length) {
+    quizEnd();
+  } else {
+    getQuestion();
+  }
+}
 
-// The array of questions for our quiz game.
-var questions = [
-  {
-    q: "Is JavaScript case-sensitive language?",
-    a: "2. true",
-    choices: [
-      { choice: "1. false" },
-      { choice: "2. true" },
-    ],
-  },
-  {
-    q: "Which of the following code creates an object?",
-    a: "3. var book = new Object();",
-    choices: [
-      { choice: "1. var book = Object();" },
-      { choice: "2. var book = new OBJECT();" },
-      { choice: "3. var book = new Object();" },
-      { choice: "4. var book = new Book();" },
-    ],
-  },
-  {
-    q: "Which of the following function of Number object returns a string value version of the current number?",
-    a: "1. toString()",
-    choices: [
-      { choice: "1. toString()" },
-      { choice: "2. toFixed()" },
-      { choice: "3. toLocaleString()" },
-      { choice: "4. toPrecision()" },
-    ],
-  },
-  {
-    q: "Which is not valid data type in Javascript",
-    a: "4. float",
-    choices: [
-      { choice: "1. Undefinded" },
-      { choice: "2. Boolean" },
-      { choice: "3. Number" },
-      { choice: "4. float" },
-    ],
-  },
-  {
-    q: "When did javascript first appear?",
-    a: "1. 1995",
-    choices: [
-      { choice: "1. 1995" },
-      { choice: "2. Roaring twenties" },
-      { choice: "3. 2005" },
-      { choice: "4. 2000" },
-    ],
-  },
-  {
-    q: "What does DOM stand for?",
-    a: "2. Document Object Model",
-    choices: [
-      { choice: "1. Do Overnight Modules" },
-      { choice: "2. Document Object Model" },
-      { choice: "3. Divas Obviously Model" },
-      { choice: "4. Do Oo Mo" },
-    ],
-  },
-  {
-    q: "What is getItem commonly used for?",
-    a: "2. local storage",
-    choices: [
-      { choice: "1. adding drama" },
-      { choice: "2. local storage" },
-      { choice: "3. online shopping" },
-      { choice: "4. naming a variable" },
-    ],
-  },
-];
+function quizEnd() {
+  //Stopping timer, Show final Score and hide question section
+  clearInterval(timerId);
+  var endScreenEl = document.getElementById("end-screen");
+  endScreenEl.removeAttribute("class");
+  var finalScoreEl = document.getElementById("final-score");
+  finalScoreEl.textContent = time;
+  questionsEl.setAttribute("class", "hide");
+}
 
-// When GoBack button is clicked on highscore page
+function clockTick() {
+  //Update time and check if user ran out of time
+  time--;
+  timerEl.textContent = time;
 
-var renderStartPage = function () {};
+  if (time <= 0) {
+    quizEnd();
+  }
+}
 
-//Dynamically checking if game-over is true or if the timer is 0. Total Time allowed at 60seconds
-var setTime = function () {};
+function saveHighscore() {
+  //Get value of input box
+  var initials = initialsEl.value.trim();
 
-var startGame = function () {};
+  if (initials !== "") {
+    //Getting saved scores from localStorage, or if not set to empty array
+    var highscores =
+      JSON.parse(window.localStorage.getItem("highscores")) || [];
 
-// Next questions to show
+    var newScore = {
+      score: time,
+      initials: initials,
+    };
+    //Save to localStorage and redirect to next page "score.html"
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+    window.location.href = "score.html";
+  }
+}
 
-var setQuestion = function () {};
+function checkForEnter(event) {
+  if (event.key === "Enter") {
+    saveHighscore();
+  }
+}
 
-var resetAnswers = function () {};
-
-// Display Questions and answers buttons
-var displayQuestion = function () {};
-
-//Display Correct if user have selected correct answer
-var answerCorrect = function () {};
-
-//Display Wrong if user have selected wrong answer
-var answerWrong = function () {};
-
-// Validation check if answer is correct
-var answerCheck = function () {};
-
-//Show total score at end of the questions/Game
-var showScore = function () {};
-
-//Create high score values
-var createHighScore = function () {};
-
-//Save High Score
-var saveHighScore = function () {};
-
-//Load previous values
-var loadHighScore = function () {};
-
-//Display HighScore screen form home page
-var displayHighScores = function () {};
-
-//Clear High Scores
-var clearScores = function () {};
-
-//Start Quiz button to start
-
-// Submit button
-
-//View HighScore button
-
-//Go back button
-
-//Clear Score button
+//Onclick event calling Start quiz and Submit initials
+submitBtn.onclick = saveHighscore;
+startBtn.onclick = startQuiz;
+initialsEl.onkeyup = checkForEnter;
